@@ -6,7 +6,6 @@ networks:
 services:
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
-    container_name: cadvisor
     platform: linux/amd64
     hostname: cadvisor
     volumes:
@@ -31,20 +30,26 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
     depends_on:
-      - cadvisor
+    - cadvisor
+    - node-exporter
     ports:
       - "9090:9090"
     networks:
       - monitoring      
 
   node-exporter:
-    image: prom/node-exporter
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    command:
+      - '--path.rootfs=/host'
+    pid: host
     volumes:
-      - /proc:/host/proc:ro
+      - '/:/host:ro,rslave'
     ports:
       - 9100:9100
     networks:
-      - monitoring      
+      - monitoring
+    restart: unless-stopped
   
   grafana:
     image: grafana/grafana
