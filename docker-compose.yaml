@@ -35,7 +35,7 @@ services:
     ports:
       - "9090:9090"
     networks:
-      - monitoring      
+      - monitoring
 
   node-exporter:
     image: quay.io/prometheus/node-exporter:latest
