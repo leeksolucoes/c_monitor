@@ -15,4 +15,11 @@ scrape_configs:
         - '168.75.66.214:9100'
         - '168.75.76.99:9100'
 
+  - job_name: 'cadvisor'
+    scrape_interval: 10s
+    scrape_timeout: 8s
+    static_configs:
+      - targets:
+          - 'cadvisor:8080'
+
 

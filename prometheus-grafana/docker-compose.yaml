@@ -1,17 +1,17 @@
 version: '3.8'
 services:
 
-  nginx:
-    image: nginx:alpine
-    container_name: nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - /etc/ssl/gosac:/etc/ssl/gosac
-    networks:
-      - monitoring
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: nginx
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+  #     - ./nginx/certificates:/etc/ssl/gosac
+  #   networks:
+  #     - monitoring
 
   prometheus:
     image: prom/prometheus:latest
@@ -30,6 +30,8 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
       - grafana-data:/var/lib/grafana
+    ports:
+      - "3000:3000"
     networks:
       - monitoring
 
