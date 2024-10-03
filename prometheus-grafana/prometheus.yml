@@ -7,7 +7,7 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
-  - job_name: 'node-exporter-local'
+  - job_name: 'node-exporter'
     scrape_interval: 10s
     scrape_timeout: 8s
     static_configs:

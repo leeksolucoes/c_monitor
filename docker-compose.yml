@@ -1,0 +1,29 @@
+services:
+  
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    platform: linux/amd64
+    hostname: cadvisor
+    volumes:
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run:ro"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
+      - "/dev/disk/:/dev/disk:ro"
+    ports:
+      - "8080:8080"
+    privileged: true
+    devices:
+      - "/dev/kmsg"
+    restart: unless-stopped
+
+  node-exporter:
+    image: quay.io/prometheus/node-exporter
+    container_name: node-exporter
+    restart: always
+    volumes:
+      - /:/host:ro,rslave
+    ports:
+      - "9100:9100"
+    command:
+      - "--path.rootfs=/host"
