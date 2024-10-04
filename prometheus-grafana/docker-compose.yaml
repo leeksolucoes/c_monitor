@@ -2,8 +2,10 @@ version: '3.8'
 services:
 
   nginx:
-    image: nginx:alpine
     container_name: nginx
+    build:
+      context: ./  # Caminho para o diretório onde o Dockerfile está localizado
+      dockerfile: Dockerfile  # Nome do Dockerfile (opcional se for o padrão "Dockerfile")
     ports:
       - "80:80"
       - "443:443"
@@ -12,6 +14,7 @@ services:
       - ./nginx/certificates:/etc/ssl/gosac
     networks:
       - monitoring
+
 
   prometheus:
     image: prom/prometheus:latest
